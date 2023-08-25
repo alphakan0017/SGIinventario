@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 - Figura basica con Three.js</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Configuración básica
+        const escena = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Creación del cubo
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const cubo = new THREE.Mesh(geometry, material);
+        escena.add(cubo);
+
+        // Posición de la cámara
+        camera.position.z = 5;
+
+        // Función para animar
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotación del cubo
+            cubo.rotation.x += 0.00;
+            cubo.rotation.y += 0.05;
+
+            renderer.render(escena, camera);
+        }
+        animate();
+
+        // Evento de movimiento del ratón
+        document.addEventListener('mousemove', (event) => {
+            const mouseX = event.clientX - window.innerWidth / 2;
+            const mouseY = event.clientY - window.innerHeight / 2;
+
+            cubo.position.x = mouseX * 0.01;
+            cubo.position.y = -mouseY * 0.01;
+        });
+
+    </script>
+</body>
+</html>
